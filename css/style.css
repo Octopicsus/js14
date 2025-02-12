@@ -1,3 +1,25 @@
-body{
-    background-color: aquamarine;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding-top: 20px;
+}
+
+button {
+    padding: 10px 30px;
+    border: none;
+    cursor: pointer;
+    background-color: greenyellow;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+button.selected {
+    background-color: rgb(0, 0, 0);
+    color: white;
 }
