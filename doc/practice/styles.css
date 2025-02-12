@@ -1,0 +1,25 @@
+#root > div {
+  width: 800px;
+  margin: 0 auto;
+}
+
+
+.hidden {
+  display: none;
+}
+
+.error {
+  color: red;
+}
+
+
+.cars-wrapper {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  row-gap: 10px;
+  border: 1px solid black;
+}
+
+.cars-wrapper > div {
+  background: lightgray;
+}

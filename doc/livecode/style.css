@@ -1,0 +1,8 @@
+.data > div {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
