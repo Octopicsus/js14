@@ -116,18 +116,18 @@ function showPopup(item, type) {
           { label: "Model", value: data.model },
           { label: "Manufacturer", value: data.manufacturer },
           { label: "Passengers", value: data.passengers },
-          { label: "Cost in Credits", value: data.cost_in_credits },
+          { label: "Credits", value: data.cost_in_credits },
           { label: "Length", value: data.length },
           { label: "Starship Class", value: data.starship_class },
           {
-            label: "Max Atmosphering Speed",
+            label: "Max Speed",
             value: data.max_atmosphering_speed,
           },
         ];
       }
 
       details.forEach(({ label, value }) => {
-        const detailElement = document.createElement("p");
+        const detailElement = document.createElement("h5");
         detailElement.textContent = `${label}: ${value}`;
         popup.appendChild(detailElement);
       });
