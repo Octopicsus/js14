@@ -56,7 +56,7 @@ p:hover {
 
 .load-btn {
     background-color: white;
-    background-image: url('/img/down-arrow.svg');
+    background-image: url('../img/down-arrow.svg');
     background-size: 24px;
     background-repeat: no-repeat;
     background-position: center;
