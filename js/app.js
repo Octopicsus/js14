@@ -1,5 +1,6 @@
 const root = document.getElementById("root");
 let itemUrl = "";
+let currentType = "";
 
 function createButton(text) {
   const button = document.createElement("button");
@@ -45,6 +46,7 @@ function clearContent() {
 function responseApi(type) {
   if (type) {
     itemUrl = `https://swapi.dev/api/${type}`;
+    currentType = type; 
     clearContent();
   }
 
@@ -60,7 +62,7 @@ function responseApi(type) {
       } else {
         loadBtn.classList.remove("show");
       }
-      showItems(data.results, type);
+      showItems(data.results, currentType);
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     });
 }
