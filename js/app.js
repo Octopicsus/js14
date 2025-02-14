@@ -61,13 +61,12 @@ function createDetailElement(label, value) {
 function getDetails(data, type) {
   if (type === "people") {
     return [
-      { label: "Homeworld", value: data.homeworld },
       { label: "Gender", value: data.gender },
       { label: "Height", value: data.height },
       { label: "Mass", value: data.mass },
       { label: "Birth Year", value: data.birth_year },
-      { label: "Starships", value: data.starships.join(", ") },
-      { label: "Films", value: data.films.join(", ") },
+      { label: "Skin Color", value: data.skin_color },
+      { label: "Hair Color", value: data.hair_color },
     ];
   } else if (type === "planets") {
     return [
@@ -93,11 +92,29 @@ function getDetails(data, type) {
   return [];
 }
 
+function createDetailElement(label, value) {
+  const detailContainer = document.createElement("div");
+  detailContainer.classList.add("descript-item");
+
+  const labelElement = document.createElement("h5");
+  labelElement.textContent = `${label}:`;
+
+  const valueElement = document.createElement("h4");
+  valueElement.textContent = value;
+
+  detailContainer.appendChild(labelElement);
+  detailContainer.appendChild(valueElement);
+
+  return detailContainer;
+}
+
 function showPopup(item, type) {
   const overlay = document.querySelector(".overlay");
+  const blur = document.querySelector(".blur");
   const popup = document.querySelector(".popup");
 
   overlay.classList.add("active");
+  blur.classList.add("active");
   popup.classList.add("active");
 
   popup.innerHTML = `<h2>${item.name}</h2>`;
@@ -119,23 +136,29 @@ function generateOverlay() {
   const overlay = document.createElement("div");
   overlay.classList.add("overlay");
 
+  const blur = document.createElement("div");
+  blur.classList.add("blur");
+
   const popup = document.createElement("div");
   popup.classList.add("popup");
 
+  root.appendChild(blur);
   root.appendChild(overlay);
   root.appendChild(popup);
 
   overlay.addEventListener("click", () => {
     overlay.classList.remove("active");
+    blur.classList.remove("active");
     popup.classList.remove("active");
   });
 }
 
-function responseApi(type) {
+function createResponseApi(type) {
   let itemUrl = `https://swapi.dev/api/${type}`;
 
   return function () {
     const loadBtn = document.querySelector(".load-btn");
+    loadBtn.classList.remove("show");
 
     fetch(itemUrl)
       .then((response) => response.json())
@@ -156,14 +179,31 @@ function responseApi(type) {
   };
 }
 
+function showBg() {
+  const bg = document.createElement("div");
+  bg.classList.add("bg");
+  root.appendChild(bg);
+}
+
+function showFooter() {
+  const footer = document.createElement("footer");
+  const shape = document.createElement("div");
+  shape.classList.add("shape");
+  footer.appendChild(shape);
+  root.appendChild(footer);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  let currentResponseApi;
+
   showNavigation();
+  showBg();
   showList();
+  showFooter();
   generateOverlay();
 
   document.addEventListener("click", (event) => {
     const selectedButton = document.querySelector(".selected");
-    let newResponseApi;
 
     if (
       event.target.tagName === "BUTTON" &&
@@ -173,12 +213,17 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedButton.classList.remove("selected");
       }
       event.target.classList.add("selected");
-      newResponseApi = responseApi(event.target.id);
-      newResponseApi();
+      currentResponseApi = createResponseApi(event.target.id);
+      clearContent();
+      currentResponseApi();
+
+      const bg = document.querySelector(".bg");
+      if (bg) {
+        bg.classList.add("disable");
+      }
     } else if (event.target.classList.contains("load-btn")) {
-      if (selectedButton) {
-        newResponseApi = responseApi(selectedButton.id);
-        newResponseApi();
+      if (currentResponseApi) {
+        currentResponseApi();
       }
     }
   });
